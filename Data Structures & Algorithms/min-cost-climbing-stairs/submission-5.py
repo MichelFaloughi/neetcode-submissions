@@ -1,0 +1,25 @@
+class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
+
+        # [ 1, 2, 1, 2, 1, 1, 1 ]
+        cache = [None for _ in range(len(cost))]
+
+        def search(i):
+            
+            if i >= len(cost):
+                return 0
+            
+            if i == len(cost) - 1 or i == len(cost) - 2:
+                return cost[i]
+
+            path1 = cache[i+1] if cache[i+1] else search(i+1)  # path if took 1 step
+            path2 = cache[i+2] if cache[i+2] else search(i+2) # path if took 2 steps
+
+            cache[i] = cost[i] + min(path1,  path2)
+            return cache[i]
+        
+        return min(search(0), search(1))
+
+
+
+        
